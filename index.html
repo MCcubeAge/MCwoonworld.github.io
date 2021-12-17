@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" type="text/css" href="css.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>WoonWorld | Главная</title>
+
+    <link href="/templates/209/css/style.min.css" rel="stylesheet">
+   
+    <link rel="shortcut icon" href="{{ store.favicon }}">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>{{ store.css|raw }}</style>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+                integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+                crossorigin="anonymous">
+        <script src="https://mcapi.us/scripts/minecraft.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.11.3/build/css/alertify.min.css" />
+        <script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.11.3/build/alertify.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+  </head>
+  <body>
+<script>
+window.addEventListener('load', function theseFunc() {
+                MinecraftAPI.getServerStatus('s.nerd.nu', {
+                        port: 25565
+                }, function (err, status) {
+                        if (err) {
+                                console.log('Error')
+                        }
+                        document.querySelector('.players').innerHTML = status.players.now;
+                        document.querySelector('.players').style.animation = 'none';
+                        document.querySelector('.players').style.borderBottom = 'solid 2px rgb(6, 75, 167)';
+                });
+                document.querySelector('.ip').addEventListener('click', function copyIP() {
+                        console.log('Скопировать IP');
+                        var clipboard = new ClipboardJS('.ip');
+                        alertify.success('IP скопировано!');
+                });
+});
+</script>
+    <div class="container">
+        <div class="loader">
+                <div class="loading"></div>
+        </div>
+        <ul class="topbar">
+                <li class="topbar_spacing"></li>
+                <li id="spp">
+                        <p>Социальные сети:</p>
+                </li>
+                <!-- ADD DIRECT LINK TO YOUR DISCORD AND TWITTER IN BETWEEN the href".................LINK HERE...................."-->
+                <li><a href="https://discord.gg/mtRPWjY23D"><i class="fab fa-discord" style="margin-right:5px"></i>Discord</a></li>
+        </ul>
+
+        <div id="headerarea">
+                <div class="logoarea" style="background-color:transparent">
+                        <center><img class="animated pulse infinite" src="images.jfif" alt="Logo"
+                                        style="width:400px;height:350px;margin-top:75px;" id="theLogo"></img></center>
+                </div>
+                <div class="spacer" style="width:5%"></div>
+                <div class="infoarea" style="width:25%;">
+                        <div class="user">
+                                <p><i class="fas fa-user" style="margin-right:5px"></i>Приветсвуем на сайте сервера WoonWorld!</p>
+                        </div>
+                        <div class="playercounter">
+                                <p><i class="fas fa-globe-europe" style="margin-right:5px"></i>Игроков онлайн: <span
+                                                class="players"><i class="fas fa-spinner"></i></span><span
+                                                style="margin-left:25px;"></span></p>
+                        </div>
+                        <div class="ip" data-clipboard-text="woonworld.ml:26060">
+                                <p><i class="fas fa-copy" style="margin-right:5px"></i>Адрес сервера: <span
+                                                class="serverip">woonworld.ml:26060</span>
+                                </p>
+                        </div>
+                </div>
+        </div>
+
+        <ul class="cstnavbar">
+                <li><a class="hvr-grow" href="https://mc-woonworld.ml"><i class="fas fa-home" style="margin-right:5px"></i>ГЛАВНАЯ</a></li>
+                <li><a class="hvr-grow"  target="_blank" href="https://doubleminecraft.forum2x2.ru/"><i class="fas fa-folder-open"
+                                        style="margin-right:5px"></i>ФОРУМ</a></li>
+                <li><a class="hvr-grow" href="https://mc-woonworlddon.trademc.org/"><i class="fas fa-shopping-basket"
+                                        style="margin-right:5px"></i>МАГАЗИН</a></li>
+                <li><a class="hvr-grow" href="https://mc-woonworlddon.trademc.org/rules/"><i class="fas fa-users" style="margin-right:5px"></i>ПРАВИЛА</a>
+                </li>
+        </ul>
+        </div>
+        <center>
+      <div class="header">
+
+        <div class="logo">
+            {% if store.logo %}
+                <a href="/"><img src="{{ store.logo }}" /></a>
+            {% else %}
+                <span>{{ store.name }}</span>
+            
+        </div>
+
+          <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="{% if page.category == "index" %}active"><a href="/">{{ __("Home") }}</a></li>
+                {% for category in store.categories %}
+                  {% if category.subcategories|length > 0 %}
+                    <li class="dropdown {% if category.active %}active">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ category.name }} <i class="fa fa-caret-down"></i></a>
+                        <ul class="dropdown-menu">
+                          {% for subcategory in category.subcategories %}
+                            <li><a href="/category/{{ subcategory.id }}">{{ subcategory.name }}</a></li>
+                          {% endfor %}
+                        </ul>
+                  {% else %}
+                    <li class="{% if category.active %}active"><a href="/category/{{ category.id }}">{{ category.name }}</a></li>
+                  
+                {% endfor %}
+                {% for page in store.pages %}
+                    <li class="{% if page.active %}active"><a href="/{{ page.slug }}">{{ page.title }}</a></li>
+                {% endfor %}                
+                {% if basket.packages|length > 0 %} 
+                
+                {% if basket.username %} 
+                    <li class="visible-xs"><a href="/checkout/logout">{{ __("Logout") }}</a></li>
+                
+            </ul>
+          </div>
+        </div>
+      </nav>
+        
+                                <h2 id="title" style="margin-top:12px">Об сервере</h2>
+                        </center>
+                        <!-- ADD CUSTOM ABOUT INFORMATION HERE -->
+                        <p style="height: auto;width:100%" id="about">
+                            Сервер WoonWorld разработан для игроков майнкрафт, заставит вас наслаждаться игрой на сервере! Постоянные ивенты и акции не дадут вам заскучать, а добрая администрация всегда поможет вам! Приводите друзей, играйте, стройте дома, развивайтесь! На сервере WoonWorld есть не только это!  На сервере вы можете делать практически все! Вы также можете приобрести донат, и летать по серверу с неограниченными ресурсами! Это лишь малая часть всего, что есть на сервере WoonWorld! Заходите, и посмотрите на всё!
+
+                        </p>
+                </div>
+                <div class="row3">
+                        <center>
+                                <h2 id="title">Навигация</h2>
+                                <a href="https://wmc-woonworld.ml/"><i class="fas fa-home" style="margin-right:5px"></i>ГЛАВНАЯ</a>
+                                <a href="https://mc-woonworlddon.trademc.org/"><i class="fas fa-shopping-basket" style="margin-right:5px"></i>МАГАЗИН</a>
+                                <a href="https://mc-woonworlddon.trademc.org/rules/"><i class="fas fa-users" style="margin-right:5px"></i>ПРАВИЛА</a>
+                        </center>
+                </div>
+        </div>
+    
+    </div>
+    
+    <div class="modal" id="popup-modal" tabindex="-1" role="dialog"></div>
+    
+    
+    
+     <script>
+            jQuery(function(){
+                var countdowns = $(".countdown-to");
+                countdowns.each(function(){
+                   setInterval(function(ele) {
+                       timeLeft = parseInt(ele.attr("data-countdown"));
+                       if (timeLeft == 0) {
+                           ele.html("Time Expired!");
+                       } else {
+                       timeLeft--;
+                       ele.attr("data-countdown", timeLeft);
+                      var days = Math.floor(timeLeft / (60 * 60 * 24));
+                      var hours = Math.floor((timeLeft % (60 * 60 * 24)) / (60 * 60));
+                      var minutes = Math.floor((timeLeft % (60 * 60)) / (60));
+                      var seconds = Math.floor((timeLeft % 60));
+                      ele.html(days + "d " + hours + "h " + minutes + "m " + seconds + "s");
+                       }
+                   }, 1000, jQuery(this));
+                });
+            });
+
+        </script>
+<script>
+$.firefly({
+    color: '#388dff',
+    minPixel: 1,
+    maxPixel: 3,
+    total : 65,
+    on: '#headerarea'
+});
+</script>
+        </center>
+  </body>
+</html>
